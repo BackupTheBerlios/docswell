@@ -125,11 +125,13 @@ $th_strip_body_font_color = "";
 ######################################################################
 # Page Layout
 #
-# config_show_docsperpage	maximum number of documents shown each time
+# config_show_docsperpage	maximum number of documents shown by page
+# config_show_docspertype       maximum number of documents shown by type
 #
 ######################################################################
 
 $config_show_docsperpage = "15";
+$config_show_docspertype = "5";
 
 ######################################################################
 # Email Notification
