@@ -49,7 +49,7 @@ function cmtshow($query) {
     $bx->box_title($t->translate("Comment").": ".$db->f("SUBJECT"));
     $bx->box_body_begin();
     $timestamp = mktimestamp($db->f("DATUM"));
-    echo "<b><a href=\"mailto:".$db->f("email_usr")."\">".$db->f("AUTOR")."</a> - ".timestr($timestamp)."</b>\n";
+    echo "<b><a href=\"mailto:".mailtoencode($db->f("email_usr"))."\">".$db->f("AUTOR")."</a> - ".timestr($timestamp)."</b>\n";
     echo "<p>".$db->f("KOMMENTAR")."\n";
     $bx->box_body_end();
     $bx->box_end();

@@ -44,6 +44,7 @@ $sys_logo_alt = "BerliOS";
 $sys_logo_width = "238";
 $sys_logo_heigth = "61";
 $sys_logo_small_image = "images/berliOS_small_logo.png";
+#$sys_logo_small_image = "http://developer.berlios.de/bslogo.php?group_id=99&type=1";
 $sys_logo_small_alt = $sys_logo_alt;
 $sys_logo_small_width = "124";
 $sys_logo_small_heigth = "32";
@@ -125,12 +126,11 @@ $th_strip_body_font_color = "";
 ######################################################################
 # Page Layout
 #
-# config_show_docsperpage	maximum number of documents shown by page
-# config_show_docspertype       maximum number of documents shown by type
+# config_show_docsperpage	maximum number of documents shown each time
 #
 ######################################################################
 
-$config_show_docsperpage = "15";
+$config_show_docsperpage = "10";
 $config_show_docspertype = "5";
 
 ######################################################################
@@ -173,8 +173,8 @@ $ml_newsreqaddr = "docswell-news-request@lists.berlios.de";
 $ml_weeklynewstoaddr = "docswell-weeklynews@lists.berlios.de";
 $ml_weeklynewsreqaddr = "docswell-weeklynews-request@lists.berlios.de";
 $ml_newsadmaddr = "docswell-admin@lists.berlios.de";
-$ml_newsfromaddr = "docswell-admin@lists.berlios.de";
-$ml_newsreplyaddr = "docswell-admin@lists.berlios.de";
+$ml_newsfromaddr = "docswell-crew@berlios.de";
+$ml_newsreplyaddr = "noreply@berlios.de";
 
 ######################################################################
 # Languages

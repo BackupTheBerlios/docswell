@@ -738,32 +738,21 @@ if (($perm->have_perm("editor")) || ($perm->have_perm("admin"))) {
 // ##########################################
         if (! $status) { ?>
 	<form action="<?php $sess->purl("edit_new.php") ?>" method="post">
-		<input type="hidden" name="status" value="edit_new">
-		<TABLE cellSpacing=1 cellPadding=3 width="100%" bgColor=#ffffff border=0>
-                    <TR>
-                        <TD align="right" valign="top"><B><?php echo $t->translate("All new documents") ?>:</B></TD>
-                        <TD>
-                          <select name="ID" size=20">
-                    <?php //############################# Alle neuen Dokumenteneinträge holen ##################################
-                    		$db->query("SELECT *, DATE_FORMAT(AENDERUNGSDATUM,'%d.%m.%Y') AS fdate FROM PENDING WHERE STATUS='N' ORDER BY AENDERUNGSDATUM DESC");
-				$i = 0;
-				  while ($db->next_record()) {	
-                            	  	echo "<option value=\"".$db->f("ID")."\"";
-					if ($i == 0) echo " selected";
-					echo ">".$db->f("fdate")." - ".$db->f("TITEL") ."</option>\n";
-					$i++;
-                            	  }
-                     ?>
-                          </select>
-			</TD>
-                      </TR>
-                      <TR>
-                        <TD vAlign=top align=right>&nbsp;</TD>
-                        <TD>
-                          <input type="submit" name="Button" value="<?php echo $t->translate("Edit") ?>">
-                        </TD>
-                      </TR>		    
-		</TABLE>
+	<input type="hidden" name="status" value="edit_new">
+        <B><?php echo $t->translate("All new documents") ?>:</B>
+        <br><select name="ID" size=20">
+        <?php //############################# Alle neuen Dokumenteneinträge holen ##################################
+        $db->query("SELECT *, DATE_FORMAT(AENDERUNGSDATUM,'%d.%m.%Y') AS fdate FROM PENDING WHERE STATUS='N' ORDER BY AENDERUNGSDATUM DESC");
+	$i = 0;
+	  while ($db->next_record()) {	
+        	echo "<option value=\"".$db->f("ID")."\"";
+			if ($i == 0) echo " selected";
+				echo ">".$db->f("fdate")." - ".$db->f("TITEL") ."</option>\n";
+				$i++;
+       	        	}
+        ?>
+        </select>
+        <br><input type="submit" name="Button" value="<?php echo $t->translate("Edit") ?>">
 	</form>
 <?php }
   // #################### Dritte Seite (Eintrag wurde in die DB geschrieben) ############################################ 

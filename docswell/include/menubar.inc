@@ -108,7 +108,7 @@ if (( ($perm->have_perm("editor")) || ($perm->have_perm("admin"))) && !($logout)
   <?php 
 	$db->query("SELECT COUNT(*) FROM DOKUMENT WHERE status='D'");
 	$db->next_record();
-	echo "<a href=\"".$sess->url("delete_entry.php")."\" class=\"menus\">".$t->translate("Delete entry")." [".$db->f("COUNT(*)")."]</a>\n";
+	echo "<a href=\"".$sess->url("delete_entry.php")."\" class=\"menus\">".$t->translate("Delete")." [".$db->f("COUNT(*)")."]</a>\n";
   ?>
   </td>
 </tr>
@@ -244,7 +244,7 @@ echo "<p><input TYPE=\"submit\" NAME=\"Search\" VALUE=\"".$t->translate("Search"
 ?>
 </form>
 <p align=right><a href="<?php $sess->purl("searchform.php"); ?>" class="menus"><?php echo $t->translate("Advanced Search"); ?></a>
-<br><a href="<?php $sess->purl("/cgi-bin/dwsearch"); ?>" class="menus" target="_blank"><?php echo $t->translate("Document Search"); ?></a>
+<!--br><a href="<?php $sess->purl("/cgi-bin/dwsearch"); ?>" class="menus" target="_blank"><?php echo $t->translate("Document Search"); ?></a-->
 </td>
 </tr>
 </table>
@@ -291,5 +291,7 @@ echo "<p><input TYPE=\"submit\" NAME=\"go\" VALUE=\"".$t->translate("Go")."\">";
 if (ereg("Gecko", "$HTTP_USER_AGENT")) {
 	echo "<p align=center><a href=\"javascript:addNetscapePanel();\"><img SRC=\"images/add-button.gif\" BORDER=0 height=45 width=100></a>\n";
 }
+echo "<p align=\"center\"><a href=\"http://developer.berlios.de\">
+<img src=\"//developer.berlios.de/bslogo.php?group_id=99&type=1\" width=\"124\" height=\"32\" border=\"0\" hspace=\"3\" vspace=\"3\" alt=\"BerliOS Logo\"><br>Developer</a>\n";
 ?>
 <!-- end Language menu -->

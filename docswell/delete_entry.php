@@ -34,7 +34,7 @@ $bx = new box("",$th_box_frame_color,$th_box_frame_width,$th_box_title_bgcolor,$
 if (($perm->have_perm("editor")) || ($perm->have_perm("admin"))) {
 
   $bx->box_begin();
-  $bx->box_title($t->translate("Delete an entry"));
+  $bx->box_title($t->translate("Delete entry"));
   $bx->box_body_begin();
 	
 		##  Dokument soll gelöscht werden, hier die Datenüberprüfung
@@ -281,32 +281,20 @@ if (($perm->have_perm("editor")) || ($perm->have_perm("admin"))) {
         if (! $status) { ?>
 	<form action="<?php $sess->purl("delete_entry.php") ?>" method="post">
 		<input type="hidden" name="status" value="edit_new">
-		<TABLE cellSpacing=1 cellPadding=3 width="100%" bgColor=#ffffff border=0>
-                    <TR>
-                        <TD align="right" valign="top"><B><?php echo $t->translate("Delete entry") ?>:</B></TD>
-                        <TD>
-                          <select name="ID" size="20">
-                    <?php //############################# Alle neuen Dokumenteneinträge holen ##################################
-                    		$db->query("SELECT *, DATE_FORMAT(AENDERUNGSDATUM,'%d.%m.%Y') AS fdate FROM DOKUMENT WHERE STATUS !='D' ORDER BY TITEL ASC");
-			  
-				$i = 0;
-				  while ($db->next_record()) {	
-                            	  	echo "<option value=\"".$db->f("ID")."\"";
-					if ($i == 0) echo " selected";
+                <select name="ID" size="20">
+                <?php //############################# Alle neuen Dokumenteneinträge holen ##################################
+                $db->query("SELECT *, DATE_FORMAT(AENDERUNGSDATUM,'%d.%m.%Y') AS fdate FROM DOKUMENT WHERE STATUS !='D' ORDER BY TITEL ASC");
+		  
+			$i = 0;
+			while ($db->next_record()) {	
+				echo "<option value=\"".$db->f("ID")."\"";
+				if ($i == 0) echo " selected";
 					echo ">".$db->f("fdate")." - ".$db->f("TITEL") ."</option>\n";
 					$i++; 
-                            	  }
-                     ?>
-                          </select>
-			</TD>
-                      </TR>
-                      <TR>
-                        <TD vAlign=top align=right>&nbsp;</TD>
-                        <TD>
-                          <input type="submit" name="Button" value="<?php echo $t->translate("View entry") ?>">
-                        </TD>
-                      </TR>
-		</TABLE>
+				}
+                ?>
+                </select>
+		<br><input type="submit" name="Button" value="<?php echo $t->translate("View entry") ?>">
 	</form>
 <?php }
   // #################### Dritte Seite (Eintrag wurde in die DB geschrieben) ############################################ 

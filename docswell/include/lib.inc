@@ -4,8 +4,8 @@
 # DocsWell: Documents Announcement & Retrieval System
 # ===================================================================
 #
-# Copyright (c) 2001,2002 by
-#                Lutz Henckel (lutz.henckel@fokus.gmd.de) and
+# Copyright (c) 2001,2004 by
+#                Lutz Henckel (lutz.henckel@fokus.fraunhofer.de) and
 #                Gregorio Robles (grex@scouts-es.org)
 #                Christian Schmidt (info@mallux.de)
 #
@@ -175,7 +175,7 @@ function docfull($query) {
   $dbForm = new DB_DocsWell;
   $dbForm->query("SELECT * FROM FORMAT WHERE DOKUID=".$db->f("ID"));
   
-  echo "<b class=\"small\">".$t->translate("by")." <a href=\"mailto:".$dbAn->f("email_usr")."\">".$dbAn->f("username")."</a> - ".$timestamp."</b>\n";
+  echo "<b class=\"small\">".$t->translate("by")." <a href=\"mailto:".mailtoencode($dbAn->f("email_usr"))."\">".$dbAn->f("username")."</a> - ".$timestamp."</b>\n";
   if (($db->f("BILD")) && (file_exists("./images_docs/".$db->f("BILD")))) $bild = $db->f("BILD");
   elseif (($db->f("BILD_REFERENZ")) && (file_exists("./images_docs/".$db->f("BILD_REFERENZ")))) $bild = $db->f("BILD_REFERENZ"); 
   if ($bild) {
@@ -209,8 +209,8 @@ function docfull($query) {
 		$Autoren[] = $dbAut->f("ID");
         	echo $dbAut->f("VORNAME")." ".$dbAut->f("NACHNAME");
   		$db_email = $dbAut->f("EMAIL");
- 		if (!empty($db_email)) echo " &lt;<a href=\"mailto:$db_email\">".ereg_replace("@"," at ",htmlentities($db_email))."</a>&gt;";
- 		/* if (strlen($db3->f("email")) > 0) echo " <a href=\"mailto:".$db3->f("email")."\">";
+ 		if (!empty($db_email)) echo " &lt;<a href=\"mailto:".mailtoencode($db_email)."\">".ereg_replace("@"," at ",htmlentities($db_email))."</a>&gt;";
+ 		/* if (strlen($db3->f("email")) > 0) echo " <a href=\"mailto:".mailtoencode($db3->f("email"))."\">";
 		echo $db3->f("vorname")." ".$db3->f("nachname");
 		if (strlen($db3->f("email")) > 0) echo "</a>";
 		*/
@@ -394,7 +394,7 @@ function doccat($query,$title,$iter, $what) {
   	$counter = 0; 
   	while ($dbAut->next_record()) {
 		$counter++;
-		if (strlen($dbAut->f("email")) > 0) echo " <a href=\"mailto:".$dbAut->f("email")."\">";
+		if (strlen($dbAut->f("email")) > 0) echo " <a href=\"mailto:".mailtoencode($dbAut->f("email"))."\">";
 		echo $dbAut->f("vorname")." ".$dbAut->f("nachname");
 		if (strlen($dbAut->f("email")) > 0) echo "</a>";
 		if ($counter < $anz) echo ", ";
@@ -552,7 +552,7 @@ function docd() {
   	$counter = 0; 
   	while ($db3->next_record()) {
 		$counter++;
- 		if (strlen($db3->f("email")) > 0) echo " <a href=\"mailto:".$db3->f("email")."\">";
+ 		if (strlen($db3->f("email")) > 0) echo " <a href=\"mailto:".mailtoencode($db3->f("email"))."\">";
 		echo $db3->f("vorname")." ".$db3->f("nachname");
 		if (strlen($db3->f("email")) > 0) echo "</a>";
 		if ($counter < $anz) echo ", ";
@@ -1089,4 +1089,13 @@ function maketree ($parent, $open, $level, $mode=1, $aid=0, $add_string="") {
 			maketree ($db->f("ID"),$open,$level+1,$mode,$aid,$add_string);
 	}
 }
+
+function mailtoencode($str) {
+  $ret = "";
+  $arr = unpack("C*", $str);
+  foreach ($arr as $char)
+    $ret .= sprintf("%%%X", $char);
+  return $ret;
+}
+
 ?>
