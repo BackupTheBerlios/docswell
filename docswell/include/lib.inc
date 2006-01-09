@@ -209,7 +209,7 @@ function docfull($query) {
 		$Autoren[] = $dbAut->f("ID");
         	echo $dbAut->f("VORNAME")." ".$dbAut->f("NACHNAME");
   		$db_email = $dbAut->f("EMAIL");
- 		if (!empty($db_email)) echo " &lt;<a href=\"mailto:".mailtoencode($db_email)."\">".ereg_replace("@"," at ",htmlentities($db_email))."</a>&gt;";
+ 		if (!empty($db_email)) echo " &lt;<a href=\"mailto:".mailtoencode($db_email)."\">".ereg_replace("\."," dot ",ereg_replace("@"," at ",htmlentities($db_email)))."</a>&gt;";
  		/* if (strlen($db3->f("email")) > 0) echo " <a href=\"mailto:".mailtoencode($db3->f("email"))."\">";
 		echo $db3->f("vorname")." ".$db3->f("nachname");
 		if (strlen($db3->f("email")) > 0) echo "</a>";
@@ -1092,6 +1092,8 @@ function maketree ($parent, $open, $level, $mode=1, $aid=0, $add_string="") {
 
 function mailtoencode($str) {
   $ret = "";
+  $str = ereg_replace("@"," at ",$str);
+  $str = ereg_replace("\."," dot ",$str);
   $arr = unpack("C*", $str);
   foreach ($arr as $char)
     $ret .= sprintf("%%%X", $char);

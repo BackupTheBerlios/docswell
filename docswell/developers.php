@@ -100,7 +100,7 @@ $db->query("SELECT DISTINCT $columns FROM $tables WHERE $where ORDER BY $order")
 	echo "</td>\n";
         $email = $db->f("EMAIL");
         if (!empty($email)) {
-           echo "<td>&lt;<a href=\"mailto:".mailtoencode($db->f("EMAIL"))."\">".ereg_replace("@"," at ",htmlentities($db->f("EMAIL")))."</a>&gt;</td>\n";
+           echo "<td>&lt;<a href=\"mailto:".mailtoencode($db->f("EMAIL"))."\">".ereg_replace("\."," dot ",ereg_replace("@"," at ",htmlentities($db->f("EMAIL"))))."</a>&gt;</td>\n";
         } else {
            echo "<td>&nbsp;</td>\n";
         }
