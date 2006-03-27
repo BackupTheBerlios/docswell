@@ -4,8 +4,8 @@
 # DocsWell: Documents Announcement & Retrieval System
 # ===================================================================
 #
-# Copyright (c) 2001 by
-#                Lutz Henckel (lutz.henckel@fokus.gmd.de) and
+# Copyright (c) 2001-2006 by
+#                Lutz Henckel (lutz.henckel@fokus.fraunhofer.de) and
 #                Gregorio Robles (grex@scouts-es.org)
 #
 # BerliOS DocsWell: http://docswell.berlios.de
@@ -46,11 +46,17 @@ if (!$ml_list) {
   while (is_array($HTTP_POST_VARS) && list($key, $val) = each($HTTP_POST_VARS)) {
     switch ($key) {
       case "subscribe":		// subscribe newsletter
+        list($email_usr, $rest) = split("\n", $email_usr, 2);
         $email_usr = trim($email_usr);
         $password = trim($password);
         $cpassword = trim($cpassword);
         if (empty($email_usr) || empty($password)  || empty($cpassword)) { // Do we have all necessary data?
           $be->box_full($t->translate("Error"), $t->translate("Please enter")." <b>".$t->translate("Username")."</b>, <b>".$t->translate("Password")."</b> ".$t->translate("and")." <b>".$t->translate("E-Mail")."</b>!");
+          break;
+        }
+
+        if (strlen($rest) > 0) {
+          $be->box_full($t->translate("Error"), $t->translate("Invalid email address").".");
           break;
         }
 
@@ -66,12 +72,14 @@ if (!$ml_list) {
 	  .$t->translate("You have subscribed to $sys_name daily Newsletter")."."
 	  ."<p>".$t->translate("You are now being sent a confirmation email to verify your email address").".";
 	  $bi->box_full($t->translate("Subscribe daily Newsletter"), $msg);
-        } else { // Weekly Newsletter
+        } elseif ($period == "weekly") { // Weekly Newsletter
 	  mail($ml_weeklynewsreqaddr,"subscribe $password",$message,"From: $email_usr\nReply-To: $email_usr\nX-Mailer: PHP");
 	  $msg = $t->translate("Congratulations")."! "
 	  .$t->translate("You have subscribed to $sys_name weekly Newsletter")."."
 	  ."<p>".$t->translate("You are now being sent a confirmation email to verify your email address").".";
 	  $bi->box_full($t->translate("Subscribe weekly Newsletter"), $msg);
+        } else { // Invalid Period
+          $be->box_full($t->translate("Error"), $t->translate("Invalid period").". ".$t->translate("Please try again")."!");
         }
         $subs = 1;
         break;
